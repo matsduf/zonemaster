@@ -12,73 +12,54 @@ The method has been removed. The function is integrated in [BASIC01] instead.
 ## Method 2: Delegation name servers
 
 ### Method identifier
-**Method2** Delegation name servers
+
+**Method2**
 
 ### Objective
 
 Obtain the name servers names (extracted from the NS records) for 
-the given zone (child zone) as defined in the delegation from the parent zone.
+an existing zone (child zone) as defined in the delegation from the parent zone.
 
 ### Inputs
 
-* The name of the child zone ("child zone").
-* The fact if the child zone exists from [BASIC01].
-* The test type, "undelegate test" or "normal test".
-* If *normal test*, the name servers to the parent zone as found 
-  in [BASIC01] ("parent NS").
-* If *undelegated test*, the submitted delegation data, name server names
-  and IP addresses for *child zone* ("undelegated data").
+ * *Child zone* - The name of the zone to test.
+ * *Parent NS* - The set of IP addresses of the name servers of the parent zone of the *child zone*.
 
 ### Ordered description of steps to be taken to execute the method
 
-1. *Normal test*. For *undelegated test* go to 2.
-   1. If child zone does not exists then return ERROR.
-   2. Create an SOA query for the *child zone* and send that one server of
-      *parent NS* with RD flag unset.
-   3. If the response response contains a referral to the child zone:
-      1. Extract the name server names from the RDATA of the NS records in
-         the authority section.
-      2. Repeat the SOA query for *child zone* to the other name servers in
-         "parent NS":
-	 1. If the response from a server has the AA bit set, ignore that
-	    response.
-	 2. If the response is a referral with other NS than found above, 
-            then add the name
-	    server names of the NS to the list of name servers of the
-	    delegation for the *child zone*.
-      3. Return the set of name servers (name server names).
-      4. Processing the steps is stopped.
-   4. If the response is authoritative (AA bit set) and the answer section
-      contains the SOA record of the child zone:
-      1. Repeat the query with the next server of *parent NS* until a 
-         server has responded with a referral or no more servers are available.
-      2. If a referral was found, go to step 3.
-      3. If no referral was found, send a query for the NS records instead,
-         and use them as if it was a referral.
-      4. Return the set of name servers (name server names).
-      5. Processing the steps is stopped.
-
-2. *Undelegated test*.
-
-   1. Collect the name server names from the *undelegated data*.
-   2. Return the set of name servers (name server names).
-   3. Processing the steps is stopped.
-
+ 1. Create an empty mutable set of *results*.
+ 2. Create an *SOA query* for the *child zone* with the RD bit unset.
+ 3. For each *NS IP* in the *parent NS* set:
+    1. Send the *SOA query* to the *NS IP* and collect any response *packet*.
+    2. If no *packet* was collected, continue with the next *NS IP*.
+    3. If the *packet* has the AA bit set, continue with the next *NS IP*.
+    4. For each *NS record* in the authority section of the *packet*:
+       1. If the owner name of the *NS record* is not *child zone*, continue with the next *NS record*.
+       2. Add the *NSDNAME* field from the *NS record* to the set of *results*.
+ 4. If the set of *results* is empty:
+    1. Create an *NS query* for the *child zone* with the RD bit unset.
+    2. For each *NS IP* in the *parent NS* set:
+       1. Send the *NS query* to *NS IP* and collect any response *packet*.
+       2. If no *packet* was collected, continue with the next *NS IP*.
+       3. If the *packet* has the AA bit unset, continue with the next *NS IP*.
+       4. For each *NS record* in the answer section of the *packet*:
+          1. If the owner name of the *NS record* is not *child zone*, continue with the next *NS record*.
+          2. Add the *NSDNAME* field from the *NS record* to the set of *results*.
+ 5. Return the set of *results*.
 
 ### Outcome(s)
 
-Unless ERROR was returned in the steps, outcome is the non-empty
-set of name servers.
+A set of name servers.
 
 ### Special procedural requirements
 
-The method assumes that the servers of the parent zone behaves the
-same way as when [BASIC01] was run. It also assumes that for an
-*undelegated test* the *undelegated data* must be non-empty.
+ * The response to a given query from a given server may be cached in order to limit the number of requests.
+ * The *results* set preserves neither duplicates nor order among its elements.
+ * The *results* set compares its elements case-insensitively.
 
 ### Dependencies
 
-Test Case [BASIC01] must have been run.
+None
 
 
 ## Method 3: In-zone name servers
