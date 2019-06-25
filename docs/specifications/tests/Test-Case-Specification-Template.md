@@ -82,7 +82,7 @@ the ignored result.
 
 None
 
-*[Links not displayed when rendered as markdown. Used above.]*
+*[Links below not displayed when rendered as markdown. Used above.]*
 
 [Method4]: ../Methods.md#method-4-obtain-glue-address-records-from-parent
 [Method5]: ../Methods.md#method-5-obtain-the-name-server-address-records-from-child
