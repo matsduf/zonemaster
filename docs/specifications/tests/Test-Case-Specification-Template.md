@@ -38,11 +38,10 @@ initial capitals within quotemarks in parenthesis.]*
 3. Obtain the set of name server IP addresses using [Method4] and [Method5]
    ("Name Server IP").
 
-*[Use explicit loops when suitable.]*
+*[Use explicit loops when suitable. Indent and explicitly order the steps 
+within the loop.]*
 
 4. For each name server in *Name Server IP* do:
-
-*[Indent and explicitly order the steps within the loop.]*
 
    1. Send the SOA query and collect the response.
    2. If there is no DNS response, then output *[NO_RESPONSE]*
