@@ -51,7 +51,8 @@ G00      | Fail               | The delegation includes at least one in-bailiwic
 The child zone name is derived from the tables above. In the first table, each combination
 defined combination of messages from the test case is given a capital letter, e.g. `A`. In
 the second table the zone file name prefix is defined, e.g. `A00`. The prefix is is prepended
-the base domain name, e.g. `A00.consistency05.data.zonemaster.se.`.
+the base domain name, e.g. `A00.consistency05.data.zonemaster.se` and then a general prefix
+`zone` is added to the final domain name, e.g. `zone.A00.consistency05.data.zonemaster.se`.
 
 
 
