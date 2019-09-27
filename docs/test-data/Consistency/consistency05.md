@@ -13,7 +13,7 @@ The messages are defined in the test case ([CONSISTENCY05]).
 
 * T = the message _MUST_ be outputted
 * F = the message must _NOT_ be outputted
-* If the cell is empty, then the presence or non-presence is ignored.
+* - = the presence or non-presence is ignored.
 
 Message \ Scenario group          | A | B | D | E | F | G | H | I
 :---------------------------------|:--|:--|:--|:--|:--|:--|:--|:--
@@ -22,7 +22,7 @@ NO_RESPONSE                       | F | T | T | F | T | F | F | F
 CHILD_ZONE_LAME                   | F | F | T | T | T | F | F | F
 IN_BAILIWICK_ADDR_MISMATCH        | F | F | F | F | F | T | F | F
 OUT_OF_BAILIWICK_ADDR_MISMATCH    | F | F | F | F | F | F | T | F
-EXTRA_ADDRESS_CHILD               | F | F | F | F | F | F | F | T
+EXTRA_ADDRESS_CHILD               | F | F | F | F | F | - | F | T
 ADDRESSES_MATCH                   | T | F | F | F | F | F | F | F
 
 A scenario group, e.g. "A", will give the given values of True (message
@@ -46,6 +46,7 @@ E00      |Fail           |Two name server names in delegation and both respond w
 E01      |Fail           |Two name server names in delegation and both respond without NOERROR/NXDOMAIN.
 F00      |Fail           |Two name server names in delegation and both give no response on port 53.
 G00      |Fail           |Two name server names in delegation with one in-bailiwick name with glue record that mismatches records in zone.
+G01      |Fail           |Two name server names in delegation with one in-bailiwick name with glue record that is absent in zone.
 H00      |Fail           |Two name server names in delegation with one out-of-bailiwich name with glue record that mismatches record in authoritative zone.
 I00      |Pass           |Two name server names in delegation with two in-bailiwich names with glue records where records in zone matches but also has valid extra addresses.
 
