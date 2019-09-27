@@ -11,9 +11,9 @@ The base domain name for the test zones in this document is
 ## Messages
 The messages are defined in the test case ([CONSISTENCY05]).
 
-* T = the message _MUST_ be outputted
-* F = the message must _NOT_ be outputted
-* - = the presence or non-presence is ignored.
+* "T" = the message _MUST_ be outputted
+* "F" = the message must _NOT_ be outputted
+* "-" = the presence or non-presence is ignored.
 
 Message \ Scenario group          | A | B | D | E | F | G | H | I
 :---------------------------------|:--|:--|:--|:--|:--|:--|:--|:--
