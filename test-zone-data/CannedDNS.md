@@ -1,4 +1,4 @@
-# Wishes for a Canned DNS server
+# Wishes for a CannedDNS server
 Mats Dufberg
 
 
@@ -12,7 +12,7 @@ name server that know any details of the DNS protocol besides reading a query
 and creating a response.
 
 This document have specifications of what is required for such a name server,
-Canned DNS server. That could be integrated in an existing tool or it could
+CannedDNS server. That could be integrated in an existing tool or it could
 be created as a stand-alone tool.
 
 
@@ -28,6 +28,19 @@ I assume that the daemon must be able to listen to multiple IP addresses
 in one instance, but at the same time being able to separate those from
 each other.
 
+## Configuration
+
+Test scearios and test zones are created per Zonemaster test case. To retain a
+workable structure, each test case is given its own folder for all files and
+configuration for all scenarios for that test case. Configuration common to
+multiple tets cases are kept in separate folders for such data.
+
+By putting all configuration for a test case in a dedicated folder, the risk
+of `Git` conflicts is reduced.
+
+To have a workable solution the CannedDNS server it must support "include"
+function. I.e. the top level configuration file must support some mechanism
+to include other files in other folders with the specific configuration.
 
 ## Actions
 
